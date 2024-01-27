@@ -76,8 +76,14 @@ components:
       - name: metallb
         namespace: dev-stack
         url: https://metallb.github.io/metallb
-        version: 0.13.12
+        version: 0.13.11
       - name: dev-stack
         namespace: dev-dev-stack
         localPath: chart
         version: 0.0.1
+      - name: minio
+        namespace: dev-stack
+        version: 5.0.14
+        url: https://charts.min.io/
+        valuesFiles:
+          - "values/values.yaml"

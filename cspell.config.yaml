@@ -13,10 +13,12 @@ words:
   - defenseunicorns
   - doublestar
   - indentless
+  - istio
   - kubeconfig
   - metallb
   - ossf
   - Parens
+  - readwrite
   - sarif
   - servicelb
   - toplevel
