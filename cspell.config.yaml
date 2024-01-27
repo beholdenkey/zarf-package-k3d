@@ -5,6 +5,7 @@ words:
   - commitlint
   - conventionalcommits
   - Crossplane
+  - datasource
   - datasources
   - defenseunicorns
   - doublestar
