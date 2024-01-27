@@ -2,6 +2,7 @@ version: "0.2"
 words:
   - beholdenkey
   - Buildah
+  - cmds
   - CODEOWNERS
   - codeql
   - commitlint
@@ -18,5 +19,6 @@ words:
   - Parens
   - sarif
   - servicelb
+  - toplevel
   - traefik
   - yolo
