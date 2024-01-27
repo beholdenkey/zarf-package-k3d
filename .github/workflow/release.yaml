@@ -4,6 +4,12 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      releaseType:
+        description: 'Type of release (major, minor, patch)'
+        required: true
+        default: 'patch'
 
 jobs:
   tag-new-version:
@@ -23,6 +29,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           config-file: release-please-config.json
           manifest-file: release-please-manifest.json
+          bump-minor-pre-major: ${{ github.event.inputs.releaseType == 'minor' }}
+          bump-patch-for-minor-pre-major: ${{ github.event.inputs.releaseType == 'patch' }}
 
       - id: release-flag
         run: echo "release_created=${{ steps.tag.outputs.release_created || false }}" >> $GITHUB_OUTPUT
