@@ -2,7 +2,7 @@ line_ending: lf  # Set according to your preference
 doublestar: false
 continue_on_error: false
 include: []  # Add paths to include if necessary
-exclude: []  # Add paths to exclude if necessary
+exclude: [chart]  # Add paths to exclude if necessary
 regex_exclude: ['.pre-commit-config.yaml']  # Add regex patterns to exclude files based on content
 extensions: [".yaml", ".yml"]  # File extensions to format
 
