@@ -2,10 +2,16 @@ version: "0.2"
 words:
   - Buildah
   - CODEOWNERS
+  - commitlint
   - conventionalcommits
   - Crossplane
   - datasources
   - defenseunicorns
   - doublestar
   - indentless
+  - kubeconfig
+  - metallb
   - Parens
+  - servicelb
+  - traefik
+  - yolo
