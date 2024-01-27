@@ -1,0 +1,84 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/defenseunicorns/zarf/main/zarf.schema.json
+
+kind: ZarfPackageConfig
+metadata:
+  name: dev-k3d
+  description: "dev K3d Cluster Setup. WARNING: This will destroy the cluster if it already exists."
+  url: https://github.com/beholdenkey/dev-k3d
+  yolo: true
+  # x-release-please-start-version
+  version: "0.0.1"
+  # x-release-please-end
+
+variables:
+  - name: CLUSTER_NAME
+    description: "Name of the cluster"
+    default: "dev"
+
+  - name: K3D_IMAGE
+    description: "K3d image to use"
+    default: "rancher/k3s:v1.27.4-k3s1"
+
+  - name: K3D_EXTRA_ARGS
+    description: "Optionally pass k3d arguments to the default"
+    default: ""
+
+components:
+  - name: destroy-cluster
+    required: true
+    description: "Optionally destroy the cluster before creating it"
+    actions:
+      onDeploy:
+        before:
+          - cmd: k3d cluster delete ${ZARF_VAR_CLUSTER_NAME}
+            description: "Destroy the cluster"
+
+  - name: create-cluster
+    required: true
+    description: "Create the k3d cluster"
+    actions:
+      onDeploy:
+        before:
+          - cmd: |
+              k3d cluster create \
+              -p "80:20080@server:*" \
+              -p "443:20443@server:*" \
+              --api-port 6550 \
+              --k3s-arg "--disable=traefik@server:*" \
+              --k3s-arg "--disable=metrics-server@server:*" \
+              --k3s-arg "--disable=servicelb@server:*" \
+              --k3s-arg "--disable=local-storage@server:*" \
+              --image ${ZARF_VAR_K3D_IMAGE} ${ZARF_VAR_K3D_EXTRA_ARGS} \
+              ${ZARF_VAR_CLUSTER_NAME}
+            description: "Create the cluster"
+        onSuccess:
+          - cmd: |
+              echo "You can access this cluster over SSH (note http redirect will redirect to port 80 instead of 8080):"
+              echo "ssh -N -L 8080:localhost:80 -L 8443:localhost:443 -L 6550:localhost:6550"
+              echo
+              echo "To get the kubeconfig:"
+              echo "k3d kubeconfig get ${ZARF_VAR_CLUSTER_NAME}"
+              echo
+              echo "This cluster can be destroyed with:"
+              echo "k3d cluster delete ${ZARF_VAR_CLUSTER_NAME}"
+            description: "Print out information about how to access the cluster remotely"
+
+  - name: dev-stack
+    required: true
+    description: "Install MetalLB, NGINX, local-path-rwx and Ensure MachineID to meet developer needs without later config changes"
+    actions:
+      onDeploy:
+        before:
+          - cmd: ./zarf tools kubectl get nodes -o=jsonpath='{.items[0].status.addresses[?(@.type=="InternalIP")].address}' | cut -d'.' -f1-3
+            description: "Load network ip base for MetalLB"
+            setVariables:
+              - name: BASE_IP
+    charts:
+      - name: metallb
+        namespace: dev-stack
+        url: https://metallb.github.io/metallb
+        version: 0.13.12
+      - name: dev-stack
+        namespace: dev-dev-stack
+        localPath: chart
+        version: 0.0.1
