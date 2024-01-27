@@ -7,28 +7,33 @@ on:
 
 jobs:
   tag-new-version:
-    permissions: write-all
+    permissions:
+      contents: write
+      pull-requests: write
     runs-on: ubuntu-latest
     outputs:
       release_created: ${{ steps.release-flag.outputs.release_created }}
     steps:
+      - uses: actions/checkout@v4
+
       - name: Create Release Tag
         id: tag
-        uses: google-github-actions/release-please-action@v3
+        uses: google-github-actions/release-please-action@v4
         with:
-          command: manifest
+          token: ${{ secrets.GITHUB_TOKEN }}
+          config-file: release-please-config.json
+          manifest-file: release-please-manifest.json
 
       - id: release-flag
         run: echo "release_created=${{ steps.tag.outputs.release_created || false }}" >> $GITHUB_OUTPUT
 
   publish-package:
     needs: tag-new-version
-    if: ${{ needs.tag-new-version.outputs.release_created == 'true'}}
+    if: ${{ needs.tag-new-version.outputs.release_created == 'true' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
-
     steps:
       - uses: actions/checkout@v4
 
@@ -42,7 +47,7 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
-          username: dummy
+          username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish ARM64 Capability
