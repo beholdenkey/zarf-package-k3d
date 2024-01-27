@@ -42,7 +42,7 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
-          username: ${{ github.repository_owner }}
+          username: dummy
           password: ${{ secrets.GITHUB_TOKEN }}
 
       # Splitting the publishing steps for different architectures
