@@ -1,5 +1,6 @@
 version: "0.2"
 words:
+  - beholdenkey
   - Buildah
   - CODEOWNERS
   - commitlint
