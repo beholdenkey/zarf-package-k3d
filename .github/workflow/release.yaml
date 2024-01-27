@@ -16,15 +16,15 @@ jobs:
         id: tag
         uses: google-github-actions/release-please-action@v3
         with:
-          command: manifest # use configs in release-please-config.json
+          command: manifest
+
       - id: release-flag
         run: echo "release_created=${{ steps.tag.outputs.release_created || false }}" >> $GITHUB_OUTPUT
 
-  publish-uds-package:
+  publish-package:
     needs: tag-new-version
     if: ${{ needs.tag-new-version.outputs.release_created == 'true'}}
     runs-on: ubuntu-latest
-
     permissions:
       contents: read
       packages: write
@@ -42,10 +42,12 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
-          username: dummy
+          username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Publish the capability
-        run: |
-          zarf package create --confirm -a arm64 -o oci://ghcr.io/defenseunicorns/packages
-          zarf package create --confirm -a amd64 -o oci://ghcr.io/defenseunicorns/packages
+      # Splitting the publishing steps for different architectures
+      - name: Publish ARM64 Capability
+        run: zarf package create --confirm -a arm64 -o oci://ghcr.io/beholdenkey/packages
+
+      - name: Publish AMD64 Capability
+        run: zarf package create --confirm -a amd64 -o oci://ghcr.io/beholdenkey/packages
