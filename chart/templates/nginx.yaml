@@ -11,7 +11,7 @@ data:
 
     stream {
         map $ssl_preread_server_name $selected_upstream {
-            hostnames;  
+            hostnames;
             *.admin.dev backend_admin;
             keycloak.dev backend_passthrough;
             login.dev backend_passthrough;
@@ -23,7 +23,7 @@ data:
         }
 
         upstream backend_tenant {
-            server ###ZARF_VAR_BASE_IP###.201:443; 
+            server ###ZARF_VAR_BASE_IP###.201:443;
         }
 
         upstream backend_passthrough {
