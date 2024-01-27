@@ -1,0 +1,44 @@
+version: "3"
+
+vars:
+  PROJECT_ROOT:
+    sh: git rev-parse --show-toplevel
+  ARCH:
+    sh: uname -m
+  ARGS:
+    sh: echo "--no-progress --confirm"
+
+tasks:
+  default:
+    silent: true
+    cmds:
+      - task: --list
+  build:
+    desc: "Build the package"
+    cmds:
+      - zarf package create -a {{.ARCH}} . {{.ARGS}}
+  deploy:
+    desc: "Deploy the package"
+    cmds:
+      - zarf package deploy zarf-package-dev-k3d-* {{.ARGS}}
+  destroy:
+    desc: "Destroy the package"
+    cmds:
+      - k3d cluster delete dev-k3d
+  clean:
+    summary: "Cleanup Artifacts"
+    desc: "Remove Artifacts Created by the Build Process"
+    cmds:
+      - rm -rf {{.BUILD_DIR}}
+      - find {{.PROJECT_ROOT}} -type d -name 'zarf-sbom' -exec rm -rf {} +
+      - find {{.PROJECT_ROOT}} -type f -name '*.tar.zst' -delete
+  setup:
+    desc: "Setup the Environment"
+    cmds:
+      - task: build
+      - task: deploy
+  teardown:
+    desc: "Teardown the Environment"
+    cmds:
+      - task: destroy
+      - task: clean
