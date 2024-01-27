@@ -3,6 +3,7 @@ words:
   - beholdenkey
   - Buildah
   - CODEOWNERS
+  - codeql
   - commitlint
   - conventionalcommits
   - Crossplane
@@ -13,7 +14,9 @@ words:
   - indentless
   - kubeconfig
   - metallb
+  - ossf
   - Parens
+  - sarif
   - servicelb
   - traefik
   - yolo
