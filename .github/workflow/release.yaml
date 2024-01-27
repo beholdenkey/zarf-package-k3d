@@ -45,7 +45,6 @@ jobs:
           username: dummy
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # Splitting the publishing steps for different architectures
       - name: Publish ARM64 Capability
         run: zarf package create --confirm -a arm64 -o oci://ghcr.io/beholdenkey/packages
 
