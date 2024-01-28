@@ -47,7 +47,7 @@ tasks:
   destroy:
     desc: "Destroy the package"
     cmds:
-      - k3d cluster delete dev-k3d
+      - k3d cluster delete dev
   clean:
     summary: "Cleanup Artifacts"
     desc: "Remove Artifacts Created by the Build Process"
