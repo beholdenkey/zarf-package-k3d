@@ -2,18 +2,27 @@ version: "0.2"
 words:
   - beholdenkey
   - Buildah
+  - cmds
   - CODEOWNERS
+  - codeql
   - commitlint
   - conventionalcommits
   - Crossplane
   - datasource
   - datasources
   - defenseunicorns
+  - dotenv
   - doublestar
+  - elif
   - indentless
+  - istio
   - kubeconfig
   - metallb
+  - ossf
   - Parens
+  - readwrite
+  - sarif
   - servicelb
+  - toplevel
   - traefik
   - yolo

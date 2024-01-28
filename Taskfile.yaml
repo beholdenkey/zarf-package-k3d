@@ -1,0 +1,67 @@
+version: "3"
+
+dotenv: ['.env']
+
+vars:
+  PROJECT_ROOT:
+    sh: git rev-parse --show-toplevel
+  ARCH:
+    sh: |
+      UNAME_M=$(uname -m)
+      if [ "$UNAME_M" = "x86_64" ] || [ "$UNAME_M" = "amd64" ]; then
+        echo "amd64"
+      elif [ "$UNAME_M" = "arm64" ]; then
+        echo "arm64"
+      else
+        echo "Unsupported architecture: $UNAME_M" >&2
+        exit 1
+      fi
+  ARGS:
+    sh: echo "--no-progress --confirm"
+
+tasks:
+  default:
+    silent: true
+    cmds:
+      - task: --list
+  login-ghcr:
+    desc: "Login to GitHub Container Registry"
+    cmds:
+      - echo "Logging in to GitHub Container Registry..."
+      - echo $GHA_PAT | docker login ghcr.io -u $GH_USERNAME --password-stdin
+    status:
+      - docker info | grep ghcr.io
+  publish:
+    desc: "Publish the Package"
+    cmds:
+      - zarf package create --confirm -a arm64 -o oci://ghcr.io/$GH_USERNAME/packages
+      - zarf package create --confirm -a amd64 -o oci://ghcr.io/$GH_USERNAME/packages
+  build:
+    desc: "Build the package"
+    cmds:
+      - zarf package create -a {{.ARCH}} . {{.ARGS}}
+  deploy:
+    desc: "Deploy the package"
+    cmds:
+      - zarf package deploy zarf-package-dev-k3d-* {{.ARGS}}
+  destroy:
+    desc: "Destroy the package"
+    cmds:
+      - k3d cluster delete dev
+  clean:
+    summary: "Cleanup Artifacts"
+    desc: "Remove Artifacts Created by the Build Process"
+    cmds:
+      - rm -rf {{.BUILD_DIR}}
+      - find {{.PROJECT_ROOT}} -type d -name 'zarf-sbom' -exec rm -rf {} +
+      - find {{.PROJECT_ROOT}} -type f -name '*.tar.zst' -delete
+  setup:
+    desc: "Setup the Environment"
+    cmds:
+      - task: build
+      - task: deploy
+  teardown:
+    desc: "Teardown the Environment"
+    cmds:
+      - task: destroy
+      - task: clean

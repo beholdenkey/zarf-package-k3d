@@ -1,6 +1,6 @@
 apiVersion: v2
 name: dev-stack
-description: Dev stack chart
+description: Developer stack chart
 
 # A chart can be either an 'application' or a 'library' chart.
 #

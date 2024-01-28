@@ -1,47 +1,34 @@
-name: Publish Capability
+name: Publish Package
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
-    inputs:
-      releaseType:
-        description: 'Type of release (major, minor, patch)'
-        required: true
-        default: 'patch'
 
 jobs:
   tag-new-version:
-    permissions:
-      contents: write
-      pull-requests: write
+    permissions: write-all
     runs-on: ubuntu-latest
     outputs:
       release_created: ${{ steps.release-flag.outputs.release_created }}
     steps:
-      - uses: actions/checkout@v4
-
       - name: Create Release Tag
         id: tag
         uses: google-github-actions/release-please-action@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          config-file: release-please-config.json
-          manifest-file: release-please-manifest.json
-          bump-minor-pre-major: ${{ github.event.inputs.releaseType == 'minor' }}
-          bump-patch-for-minor-pre-major: ${{ github.event.inputs.releaseType == 'patch' }}
-
+          command: manifest
       - id: release-flag
         run: echo "release_created=${{ steps.tag.outputs.release_created || false }}" >> $GITHUB_OUTPUT
 
   publish-package:
     needs: tag-new-version
-    if: ${{ needs.tag-new-version.outputs.release_created == 'true' }}
+    if: ${{ needs.tag-new-version.outputs.release_created == 'true'}}
     runs-on: ubuntu-latest
+
     permissions:
       contents: read
       packages: write
+
     steps:
       - uses: actions/checkout@v4
 
@@ -49,17 +36,16 @@ jobs:
         uses: defenseunicorns/setup-zarf@main
         with:
           # renovate: datasource=github-tags depName=defenseunicorns/zarf versioning=semver
-          version: v0.32.2
+          version: v0.32.1
 
       - name: Login to GHCR
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
-          username: ${{ github.actor }}
+          username: dummy
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Publish ARM64 Capability
-        run: zarf package create --confirm -a arm64 -o oci://ghcr.io/beholdenkey/packages
-
-      - name: Publish AMD64 Capability
-        run: zarf package create --confirm -a amd64 -o oci://ghcr.io/beholdenkey/packages
+      - name: Publish the Package
+        run: |
+          zarf package create --confirm -a arm64 -o oci://ghcr.io/beholdenkey/packages
+          zarf package create --confirm -a amd64 -o oci://ghcr.io/beholdenkey/packages
