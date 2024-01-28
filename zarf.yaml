@@ -12,7 +12,7 @@ metadata:
 variables:
   - name: CLUSTER_NAME
     description: "Name of the cluster"
-    default: "dev-k3d"
+    default: "dev"
 
   - name: K3D_IMAGE
     description: "K3d image to use"
