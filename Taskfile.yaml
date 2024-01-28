@@ -24,6 +24,18 @@ tasks:
     silent: true
     cmds:
       - task: --list
+  login-ghcr:
+    desc: "Login to GitHub Container Registry"
+    cmds:
+      - echo "Logging in to GitHub Container Registry..."
+      - echo $GHA_PAT | docker login ghcr.io -u $GH_USERNAME --password-stdin
+    status:
+      - docker info | grep ghcr.io
+  publish:
+    desc: "Publish the Package"
+    cmds:
+      - zarf package create --confirm -a arm64 -o oci://ghcr.io/$GH_USERNAME/packages
+      - zarf package create --confirm -a amd64 -o oci://ghcr.io/$GH_USERNAME/packages
   build:
     desc: "Build the package"
     cmds:
