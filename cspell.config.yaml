@@ -11,7 +11,9 @@ words:
   - datasource
   - datasources
   - defenseunicorns
+  - dotenv
   - doublestar
+  - elif
   - indentless
   - istio
   - kubeconfig
