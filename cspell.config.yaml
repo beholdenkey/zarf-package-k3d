@@ -1,4 +1,17 @@
+---
 version: "0.2"
+language: en
+ignorePaths:
+  - "**/node_modules/**"
+  - package-lock.json
+  - "**/.gitignore"
+  - "**/.mega-linter.yml"
+  - "**/.github/CODEOWNERS"
+  - "**/.github/workflows/**"
+  - "**/.git/**"
+  - "**/vscode-extension/**"
+  - .vscode
+  - report
 words:
   - beholdenkey
   - Buildah
@@ -17,6 +30,7 @@ words:
   - indentless
   - istio
   - kubeconfig
+  - markdownlint
   - metallb
   - ossf
   - Parens
