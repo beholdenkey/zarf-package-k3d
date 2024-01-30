@@ -24,7 +24,7 @@ zarf package deploy zarf-package-dev-k3d-* --no-progress --confirm
 ### Deploy Remote Package
 
 ```bash
-zarf package deploy oci://ghcr.io/beholdenkey/packages/dev-k3d:0.0.1
+zarf package deploy oci://ghcr.io/beholdenkey/zarf-k3d:1.0.0
 ```
 
 ### Remove Package
