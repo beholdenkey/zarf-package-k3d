@@ -1,3 +1,4 @@
+---
 version: "3"
 
 dotenv: ['.env']
@@ -34,8 +35,8 @@ tasks:
   publish:
     desc: "Publish the Package"
     cmds:
-      - zarf package create --confirm -a arm64 -o oci://ghcr.io/$GH_USERNAME/packages
-      - zarf package create --confirm -a amd64 -o oci://ghcr.io/$GH_USERNAME/packages
+      - zarf package create --confirm -a arm64 -o oci://ghcr.io/$GH_USERNAME/dev-k3d
+      - zarf package create --confirm -a amd64 -o oci://ghcr.io/$GH_USERNAME/dev-k3d
   build:
     desc: "Build the package"
     cmds:
@@ -43,7 +44,7 @@ tasks:
   deploy:
     desc: "Deploy the package"
     cmds:
-      - zarf package deploy zarf-package-dev-k3d-* {{.ARGS}}
+      - zarf package deploy zarf-package-k3d-* {{.ARGS}}
   destroy:
     desc: "Destroy the package"
     cmds:

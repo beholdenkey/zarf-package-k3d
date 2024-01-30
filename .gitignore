@@ -7,3 +7,4 @@ zarf-sbom
 tmp/
 zarf-config.yaml
 .env
+node_modules/
