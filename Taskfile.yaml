@@ -1,3 +1,4 @@
+---
 version: "3"
 
 dotenv: ['.env']
@@ -43,7 +44,7 @@ tasks:
   deploy:
     desc: "Deploy the package"
     cmds:
-      - zarf package deploy zarf-package-dev-k3d-* {{.ARGS}}
+      - zarf package deploy zarf-package-k3d-* {{.ARGS}}
   destroy:
     desc: "Destroy the package"
     cmds:
