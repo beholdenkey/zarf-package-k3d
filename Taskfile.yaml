@@ -35,8 +35,8 @@ tasks:
   publish:
     desc: "Publish the Package"
     cmds:
-      - zarf package create --confirm -a arm64 -o oci://ghcr.io/$GH_USERNAME/packages
-      - zarf package create --confirm -a amd64 -o oci://ghcr.io/$GH_USERNAME/packages
+      - zarf package create --confirm -a arm64 -o oci://ghcr.io/$GH_USERNAME/dev-k3d
+      - zarf package create --confirm -a amd64 -o oci://ghcr.io/$GH_USERNAME/dev-k3d
   build:
     desc: "Build the package"
     cmds:
