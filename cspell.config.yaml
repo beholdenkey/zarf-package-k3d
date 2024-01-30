@@ -37,6 +37,7 @@ words:
   - readwrite
   - sarif
   - servicelb
+  - TMPL
   - toplevel
   - traefik
   - yolo
