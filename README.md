@@ -18,7 +18,7 @@ zarf package create -a amd64 . --no-progress --confirm
 ### Deploy Local Package
 
 ```bash
-zarf package deploy zarf-package-dev-k3d-* --no-progress --confirm
+zarf package deploy zarf-package-k3d-* --no-progress --confirm
 ```
 
 ### Deploy Remote Package
