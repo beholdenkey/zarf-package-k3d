@@ -79,7 +79,7 @@ components:
       - name: metallb
         namespace: dev-stack
         url: https://metallb.github.io/metallb
-        version: 0.13.12
+        version: 0.14.3
       - name: dev-stack
         namespace: dev-stack
         localPath: chart
