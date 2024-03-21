@@ -4,7 +4,7 @@ metadata:
   name: coredns-custom
   namespace: kube-system
 data:
-  uds.override: |
+  dev.override: |
     rewrite stop {
       name regex (###ZARF_VAR_CORE_DNS_OVERRIDE###) host.k3d.internal answer auto
     }
