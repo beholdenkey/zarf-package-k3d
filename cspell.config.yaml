@@ -1,4 +1,3 @@
----
 version: "0.2"
 language: en
 ignorePaths:
@@ -13,6 +12,7 @@ ignorePaths:
   - .vscode
   - report
 words:
+  - arunvelsriram
   - beholdenkey
   - Buildah
   - cmds
@@ -20,6 +20,7 @@ words:
   - codeql
   - commitlint
   - conventionalcommits
+  - coredns
   - Crossplane
   - datasource
   - datasources
