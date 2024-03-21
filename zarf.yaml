@@ -6,16 +6,34 @@ metadata:
   description: "Developer K3d Cluster Setup. WARNING: This will destroy the cluster if it already exists."
   url: https://github.com/beholdenkey/dev-k3d
   yolo: true
-  version: "###ZARF_PKG_TMPL_PACKAGE_VERSION###"
-
-constants:
-  - name: PACKAGE_VERSION
-    value: "###ZARF_PKG_TMPL_PACKAGE_VERSION###"
+  # x-release-please-start-version
+  version: "1.1.0"
+  # x-release-please-end
 
 variables:
   - name: CLUSTER_NAME
     description: "Name of the cluster"
     default: "dev"
+
+  - name: NGINX_BACKEND_ADMIN_HOSTNAME
+    description: "The hostname for the admin backend"
+    default: "*.admin.demo.dev"
+
+  - name: NGINX_BACKEND_PASSTHROUGH_HOSTNAME_1
+    description: "The hostname for the passthrough backend"
+    default: "keycloak.demo.dev"
+
+  - name: NGINX_BACKEND_PASSTHROUGH_HOSTNAME_2
+    description: "The hostname for the passthrough backend"
+    default: "login.demo.dev"
+
+  - name: NGINX_BACKEND_BACKEND_TENANT_HOSTNAME
+    description: "The hostname for the tenant backend"
+    default: "*.demo.dev"
+
+  - name: CORE_DNS_OVERRIDE
+    description: "The CoreDNS override for the .dev domain"
+    default: ".*\\.demo\\.dev"
 
   - name: K3S_IMAGE
     description: "K3d image to use"
@@ -75,6 +93,9 @@ components:
             description: "Load network ip base for MetalLB"
             setVariables:
               - name: BASE_IP
+        after:
+          - cmd: ./zarf tools kubectl rollout restart deployment coredns -n kube-system
+            description: "Restart CoreDNS to pick up internal DNS override for .dev"
     charts:
       - name: metallb
         namespace: dev-stack
