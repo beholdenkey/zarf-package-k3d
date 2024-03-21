@@ -1,5 +1,10 @@
 ---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
 version: "3"
+
+includes:
+  tools: .taskfiles/Tools/Taskfile.yaml
+  pre: .taskfiles/PreCommit/Taskfile.yaml
 
 dotenv: ['.env']
 
