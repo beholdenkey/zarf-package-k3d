@@ -1,5 +1,0 @@
----
-package:
-  create:
-    set:
-      PACKAGE_VERSION: 1.1.0
