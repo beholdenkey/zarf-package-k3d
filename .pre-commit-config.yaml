@@ -15,17 +15,8 @@
 # spell-checker: disable
 # See https://pre-commit.com for more information
 repos:
-  - repo: local
-    hooks:
-      - id: kics
-        name: Kics scan
-        language: docker_image
-        entry: checkmarx/kics:latest scan -p /src --ci --log-level WARN
-        verbose: true
-        stages:
-          - push
   - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook
-    rev: v9.11.0
+    rev: v9.13.0
     hooks:
       - id: commitlint
         stages: [commit-msg]
@@ -103,15 +94,6 @@ repos:
     rev: v8.18.2
     hooks:
       - id: gitleaks
-  - repo: https://github.com/terrastruct/d2
-    rev: v0.6.3
-    hooks:
-      - id: d2-fmt
-        name: d2 fmt
-        description: Format d2 diagram files
-        entry: d2 fmt
-        language: system
-        files: \.d2$
   - repo: https://github.com/cisagov/pre-commit-shfmt
     rev: v0.0.2
     hooks:
