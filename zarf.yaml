@@ -6,25 +6,32 @@ metadata:
   description: "Developer K3d Cluster Setup. WARNING: This will destroy the cluster if it already exists."
   url: https://github.com/beholdenkey/dev-k3d
   yolo: true
-  version: "###ZARF_PKG_TMPL_PACKAGE_VERSION###"
-
-constants:
-  - name: PACKAGE_VERSION
-    value: "###ZARF_PKG_TMPL_PACKAGE_VERSION###"
-
+  version: "1.1.0"
 variables:
   - name: CLUSTER_NAME
     description: "Name of the cluster"
     default: "dev"
-
+  - name: NGINX_BACKEND_ADMIN_HOSTNAME
+    description: "The hostname for the admin backend"
+    default: "*.admin.demo.dev"
+  - name: NGINX_BACKEND_PASSTHROUGH_HOSTNAME_1
+    description: "The hostname for the passthrough backend"
+    default: "keycloak.demo.dev"
+  - name: NGINX_BACKEND_PASSTHROUGH_HOSTNAME_2
+    description: "The hostname for the passthrough backend"
+    default: "login.demo.dev"
+  - name: NGINX_BACKEND_BACKEND_TENANT_HOSTNAME
+    description: "The hostname for the tenant backend"
+    default: "*.demo.dev"
+  - name: CORE_DNS_OVERRIDE
+    description: "The CoreDNS override for the .dev domain"
+    default: ".*\\.demo\\.dev"
   - name: K3S_IMAGE
     description: "K3d image to use"
     default: "rancher/k3s:v1.27.4-k3s1"
-
   - name: K3D_EXTRA_ARGS
     description: "Optionally pass k3d arguments to the default"
     default: ""
-
 components:
   - name: destroy-cluster
     required: true
@@ -34,7 +41,6 @@ components:
         before:
           - cmd: k3d cluster delete ${ZARF_VAR_CLUSTER_NAME}
             description: "Destroy the cluster"
-
   - name: create-cluster
     required: true
     description: "Create the k3d cluster"
@@ -64,10 +70,9 @@ components:
               echo "This cluster can be destroyed with:"
               echo "k3d cluster delete ${ZARF_VAR_CLUSTER_NAME}"
             description: "Print out information about how to access the cluster remotely"
-
   - name: dev-stack
     required: true
-    description: "Install MetalLB, NGINX, local-path-rwx and Ensure MachineID to meet UDS developer needs without later config changes"
+    description: "Install MetalLB, NGINX, local-path-rwx and Ensure MachineID to meet developer needs without later config changes"
     actions:
       onDeploy:
         before:
@@ -75,6 +80,9 @@ components:
             description: "Load network ip base for MetalLB"
             setVariables:
               - name: BASE_IP
+        after:
+          - cmd: ./zarf tools kubectl rollout restart deployment coredns -n kube-system
+            description: "Restart CoreDNS to pick up internal DNS override for .dev"
     charts:
       - name: metallb
         namespace: dev-stack
@@ -84,3 +92,34 @@ components:
         namespace: dev-stack
         localPath: chart
         version: 0.0.2
+  - name: validate
+    required: true
+    description: "Validate the configuration and health of the cluster"
+    actions:
+      onDeploy:
+        before:
+          - wait:
+              cluster:
+                kind: Pod
+                name: "k8s-app=kube-dns"
+                namespace: kube-system
+                condition: Ready
+          - description: "Validate coredns is resolving *.demo.dev internally"
+            cmd: |
+              set -e
+              FOO_IP=$(./zarf tools kubectl run dig-test --image=arunvelsriram/utils -q --restart=Never --rm -i -- dig +short foo.demo.dev)
+              if [ "${FOO_IP}" != "127.0.0.1" ]; then
+                echo "CoreDNS is resolving foo.demo.dev to host.k3d.internal"
+                exit 0
+              else
+                echo "CoreDNS patch failed, foo.demo.dev is resolving to 127.0.0.1"
+                exit 1
+              fi
+        onSuccess:
+          - description: "Validation successful"
+            cmd: |
+              echo "Validation of CoreDNS resolution for *.demo.dev was successful."
+        onFailure:
+          - description: "Validation failed"
+            cmd: |
+              echo "Validation of CoreDNS resolution for *.demo.dev failed. Please check the CoreDNS configuration."

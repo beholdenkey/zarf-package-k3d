@@ -7,7 +7,7 @@
 
 - [Zarf](https://docs.zarf.dev/docs/getting-started#installing-zarf)
 - [K3d](https://k3d.io/#installation)
-- [Docker](https://docs.docker.com/get-docker/) or [Podman](https://podman.io/getting-started/installation)
+- [Docker](https://docs.docker.com/get-docker/)
 
 ### Create Package Manually
 

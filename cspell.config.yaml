@@ -13,6 +13,7 @@ ignorePaths:
   - .vscode
   - report
 words:
+  - arunvelsriram
   - beholdenkey
   - Buildah
   - cmds
@@ -20,6 +21,7 @@ words:
   - codeql
   - commitlint
   - conventionalcommits
+  - coredns
   - Crossplane
   - datasource
   - datasources
@@ -29,6 +31,7 @@ words:
   - elif
   - indentless
   - istio
+  - keycloak
   - kubeconfig
   - markdownlint
   - metallb
