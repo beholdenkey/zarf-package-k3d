@@ -1,0 +1,5 @@
+---
+options:
+  log_level: debug
+  no_progress: false
+  oci_concurrency: 3

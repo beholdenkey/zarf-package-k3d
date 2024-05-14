@@ -1,0 +1,50 @@
+---
+version: "0.2"
+language: en
+ignorePaths:
+  - "**/node_modules/**"
+  - package-lock.json
+  - "**/.gitignore"
+  - "**/.mega-linter.yml"
+  - "**/.github/CODEOWNERS"
+  - "**/.github/workflows/**"
+  - "**/.git/**"
+  - "**/vscode-extension/**"
+  - .vscode
+  - report
+words:
+  - arunvelsriram
+  - autoupdate
+  - beholdenkey
+  - Buildah
+  - cmds
+  - CODEOWNERS
+  - codeql
+  - commitlint
+  - conventionalcommits
+  - coredns
+  - Crossplane
+  - datasource
+  - datasources
+  - defenseunicorns
+  - dotenv
+  - doublestar
+  - elif
+  - indentless
+  - istio
+  - keycloak
+  - kubeconfig
+  - kubeconform
+  - markdownlint
+  - metallb
+  - ossf
+  - Parens
+  - pbcopy
+  - pbpaste
+  - readwrite
+  - sarif
+  - servicelb
+  - TMPL
+  - toplevel
+  - traefik
+  - yolo

@@ -1,0 +1,27 @@
+---
+name: KICS Scan
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  pull-requests: write
+
+jobs:
+  kics-scan:
+    runs-on: ubuntu-latest
+    name: KICS Action
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Run KICS Scan
+        uses: checkmarx/kics-github-action@v2.0.0
+        with:
+          path: '.'
+          ignore_on_exit: results
+          exclude_paths: .git
+          enable_comments: true
+          output_formats: 'json,sarif'
+          fail_on: 'never'

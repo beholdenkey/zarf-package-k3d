@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: nginx
+  namespace: dev-stack
+spec:
+  selector:
+    matchLabels:
+      name: nginx
+  template:
+    metadata:
+      labels:
+        name: nginx
+        sidecar.istio.io/inject: "false"
+    spec:
+      containers:
+        - name: nginx
+          image: ghcr.io/defenseunicorns/oss/uds-k3d-nginx:alpine-1.25.3
+          command: ["nginx", "-g", "daemon off;"]
+          ports:
+            - containerPort: 80
+              hostPort: 20080
+            - containerPort: 443
+              hostPort: 20443
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+      volumes:
+        - name: config-volume
+          configMap:
+            name: nginx-config

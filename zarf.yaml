@@ -1,0 +1,115 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/defenseunicorns/zarf/v0.33.2/zarf.schema.json
+kind: ZarfPackageConfig
+metadata:
+  name: k3d
+  description: "Developer K3d Cluster Setup. WARNING: This will destroy the cluster if it already exists."
+  url: https://github.com/beholdenkey/forge-package-k3d
+  yolo: true
+  version: "0.0.1"
+variables:
+  - name: CLUSTER_NAME
+    description: "Name of the cluster"
+    default: "dev"
+  - name: CORE_DNS_OVERRIDE
+    description: "The CoreDNS override for the .dev domain"
+    default: ".*\\.demo\\.dev"
+  - name: K3S_IMAGE
+    description: "K3d image to use"
+    default: "ghcr.io/beholdenkey/oss/forge-k3d-k3s:v1.30.0-k3s1"
+  - name: K3D_EXTRA_ARGS
+    description: "Optionally pass k3d arguments to the default"
+    default: ""
+components:
+  - name: destroy-cluster
+    required: true
+    description: "Optionally destroy the cluster before creating it"
+    actions:
+      onDeploy:
+        before:
+          - cmd: k3d cluster delete ${ZARF_VAR_CLUSTER_NAME}
+            description: "Destroy the cluster"
+  - name: create-cluster
+    required: true
+    description: "Create the k3d cluster"
+    actions:
+      onDeploy:
+        before:
+          - cmd: |
+              k3d cluster create \
+              -p "80:20080@server:*" \
+              -p "443:20443@server:*" \
+              --api-port 6550 \
+              --k3s-arg "--disable=traefik@server:*" \
+              --k3s-arg "--disable=metrics-server@server:*" \
+              --k3s-arg "--disable=servicelb@server:*" \
+              --k3s-arg "--disable=local-storage@server:*" \
+              --image ${ZARF_VAR_K3S_IMAGE} ${ZARF_VAR_K3D_EXTRA_ARGS} \
+              ${ZARF_VAR_CLUSTER_NAME}
+            description: "Create the cluster"
+        onSuccess:
+          - cmd: |
+              echo "Cluster access and management commands:"
+              echo "SSH tunnel: ssh -N -L 8080:localhost:80 -L 8443:localhost:443 -L 6550:localhost:6550"
+              echo "Kubeconfig: k3d kubeconfig get ${ZARF_VAR_CLUSTER_NAME}"
+              echo "Destroy cluster: k3d cluster delete ${ZARF_VAR_CLUSTER_NAME}"
+            description: "Print out information about how to access the cluster remotely"
+  - name: dev-stack
+    required: true
+    description: "Install MetalLB, NGINX, local-path-rwx and Ensure MachineID to meet developer needs without later config changes"
+    actions:
+      onDeploy:
+        before:
+          - cmd: ./zarf tools kubectl get nodes -o=jsonpath='{.items[0].status.addresses[?(@.type=="InternalIP")].address}' | cut -d'.' -f1-3
+          - cmd: echo "Load network IP base for MetalLB"
+            description: "Load network IP base for MetalLB"
+            setVariables:
+              - name: BASE_IP
+        after:
+          - cmd: ./zarf tools kubectl rollout restart deployment coredns -n kube-system
+          - cmd: echo "Restarting CoreDNS to apply the custom configuration to ${ZARF_VAR_CLUSTER_NAME}"
+    charts:
+      - name: metallb
+        namespace: dev-stack
+        url: https://metallb.github.io/metallb
+        version: 0.14.5
+      - name: dev-stack
+        namespace: dev-stack
+        localPath: chart
+        version: 0.0.2
+      - name: minio
+        namespace: dev-stack
+        version: 5.2.0
+        url: https://charts.min.io/
+        valuesFiles:
+          - "values/minio-values.yaml"
+  - name: validate
+    required: true
+    description: "Validate the configuration and health of the cluster"
+    actions:
+      onDeploy:
+        before:
+          - wait:
+              cluster:
+                kind: Pod
+                name: "k8s-app=kube-dns"
+                namespace: kube-system
+                condition: Ready
+          - description: "Validate coredns is resolving *.demo.dev internally"
+            cmd: |
+              set -e
+              FOO_IP=$(./zarf tools kubectl run dig-test --image=arunvelsriram/utils -q --restart=Never --rm -i -- dig +short foo.demo.dev)
+              if [ "${FOO_IP}" != "127.0.0.1" ]; then
+                echo "CoreDNS is resolving foo.demo.dev to host.k3d.internal"
+              else
+                echo "CoreDNS patch failed, foo.demo.dev is resolving to 127.0.0.1"
+                exit 1
+              fi
+        onSuccess:
+          - description: "Validation successful"
+            cmd: |
+              echo "Validation of CoreDNS resolution for *.demo.dev was successful."
+        onFailure:
+          - description: "Validation failed"
+            cmd: |
+              echo "Validation of CoreDNS resolution for *.demo.dev failed. Please check the CoreDNS configuration."

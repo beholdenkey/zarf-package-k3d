@@ -1,0 +1,26 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+tasks:
+  k3d-development:
+    summary: Create the k3d Development Bundle
+    desc: Create the K3d Development Bundle
+    dir: bundle
+    cmds:
+      - uds create . --confirm --no-progress
+    silent: true
+    sources:
+      - /*.tar.zst
+    generates:
+      - uds-bundle-k3d-development-*.tar.zst
+    method: checksum
+  deploy-k3d-development-bundle:
+    summary: Deploy the K3d Development Bundle
+    desc: Deploy the K3d Development Bundle
+    deps: ['k3d-development']
+    dir: bundle
+    cmds:
+      - echo "Deploying the K3d Development Bundle..."
+      - |
+        BUNDLE_VERSION=$(ls uds-bundle-k3d-development-* | sort -V | tail -n 1)
+        uds deploy $BUNDLE_VERSION --confirm --no-progress
