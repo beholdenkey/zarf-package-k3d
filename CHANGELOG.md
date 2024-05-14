@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.0 (2024-05-14)
+
+
+### Features
+
+* init commit ([e527a77](https://github.com/beholdenkey/forge-package-k3d/commit/e527a77e185526cee812f5af84e362dbd9d25fb3))
+* migrated to googleapis/release-please-action ([fbba451](https://github.com/beholdenkey/forge-package-k3d/commit/fbba4516462f6e04bb6b123455e2ab447e0a95c6))
+
 ## [1.7.4](https://github.com/beholdenkey/forge-package-k3d/compare/v1.7.3...v1.7.4) (2024-05-13)
 
 
