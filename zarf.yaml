@@ -6,7 +6,7 @@ metadata:
   description: "Developer K3d Cluster Setup. WARNING: This will destroy the cluster if it already exists."
   url: https://github.com/beholdenkey/forge-package-k3d
   yolo: true
-  version: "0.0.1"
+  version: "1.0.1"
 variables:
   - name: CLUSTER_NAME
     description: "Name of the cluster"

@@ -8,7 +8,7 @@ metadata:
 packages:
   - name: k3d
     repository: ghcr.io/beholdenkey/packages/k3d
-    ref: 0.0.1
+    ref: 1.0.1
   - name: init
     repository: ghcr.io/defenseunicorns/packages/init
     ref: v0.33.2
