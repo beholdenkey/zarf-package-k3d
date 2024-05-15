@@ -24,9 +24,12 @@ variables:
   - name: CLUSTER_NAME
     description: "Name of the cluster"
     default: "dev"
-  - name: CORE_DNS_OVERRIDE
-    description: "The CoreDNS override for the .dev domain"
+  - name: DOMAIN
+    description: "The domain to use for the cluster"
     default: ".*\\.demo\\.dev"
+  - name: SUBDOMAIN
+    description: "The subdomain to use for the cluster"
+    default: "foo"
   - name: K3S_IMAGE
     description: "K3d image to use"
     default: "ghcr.io/beholdenkey/oss/forge-k3d-k3s:v1.30.0-k3s1"
@@ -111,11 +114,11 @@ components:
           - description: "Validate coredns is resolving *.demo.dev internally"
             cmd: |
               set -e
-              FOO_IP=$(./zarf tools kubectl run dig-test --image=arunvelsriram/utils -q --restart=Never --rm -i -- dig +short foo.demo.dev)
-              if [ "${FOO_IP}" != "127.0.0.1" ]; then
-                echo "CoreDNS is resolving foo.demo.dev to host.k3d.internal"
+              FOO_IP=$(./zarf tools kubectl run --generator=run-pod/v1 dig-test --image=arunvelsriram/utils --restart=Never --rm -i -- dig +short foo.demo.dev @coredns.kube-system.svc.cluster.local)
+              if [ "$FOO_IP" = "host.k3d.internal" ]; then
+                echo "CoreDNS is correctly resolving foo.demo.dev to host.k3d.internal"
               else
-                echo "CoreDNS patch failed, foo.demo.dev is resolving to 127.0.0.1"
+                echo "CoreDNS patch failed, foo.demo.dev is resolving to $FOO_IP"
                 exit 1
               fi
         onSuccess:
