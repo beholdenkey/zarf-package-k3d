@@ -8,6 +8,6 @@ package:
       METALLB_CHART_REPO: https://metallb.github.io/metallb
       # renovate: datasource=helm depName=metallb/metallb
       METALLB_CHART_VERSION: 0.14.5
-      MINIO_CHART_REPO: https://helm.min.io
+      MINIO_CHART_REPO: https://charts.min.io/
       # renovate: datasource=helm depName=minio/minio
       MINIO_CHART_VERSION: 5.2.0
