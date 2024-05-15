@@ -6,8 +6,8 @@ package:
       PACKAGE_VERSION: 1.0.1
       # x-release-please-end
       METALLB_CHART_REPO: https://metallb.github.io/metallb
-      # renovate: datasource=helm depName=metallb/metallb
+      # renovate: datasource=helm depName=metallb/metallb versioning=semver
       METALLB_CHART_VERSION: 0.14.5
       MINIO_CHART_REPO: https://charts.min.io/
-      # renovate: datasource=helm depName=minio/minio
+      # renovate: datasource=helm depName=minio/minio versioning=semver
       MINIO_CHART_VERSION: 5.2.0
