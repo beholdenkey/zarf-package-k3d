@@ -3,3 +3,10 @@ options:
   log_level: debug
   no_progress: false
   oci_concurrency: 3
+variables:
+  k3d:
+    cluster_name: "awesome"
+    domain: ".*\\.demo\\.dev"
+    subdomain: "foo"
+    k3s_image: "ghcr.io/beholdenkey/oss/forge-k3d-k3s:v1.30.0-k3s1"
+    k3d_extra_args: ""
