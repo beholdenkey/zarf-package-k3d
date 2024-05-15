@@ -20,7 +20,9 @@ tasks:
   setup:
     summary: Setup Developer Environment
     desc: Setup Development Environment
-    deps: ["tools:docker"]
+    deps:
+      - tools:docker
+      - create
     cmds:
       - task bundle:deploy-k3d-development-bundle
 
