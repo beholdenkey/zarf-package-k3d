@@ -3,7 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: coredns
-  namespace: kube-system
+  namespace: {{ .Release.Namespace }}
 data:
   Corefile: |
     .:53 {
