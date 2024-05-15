@@ -2,12 +2,9 @@
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
 version: "3"
 
-vars:
-  RUNTIMES: docker,podman
-
 tasks:
   base64-clipboard:
-    desc: "Base64 encode whatever is in the clipboard"
+    desc: Base64 encode whatever is in the clipboard
     silent: true
     cmds:
       - pbpaste | base64 | pbcopy
@@ -17,7 +14,7 @@ tasks:
 
   docker.start:
     internal: true
-    desc: "Start Docker on macOS or Linux if it is not already running."
+    desc: Start Docker on macOS or Linux if it is not already running.
     cmds:
       - |
         os_type=$(uname)
@@ -55,7 +52,7 @@ tasks:
       - {msg: "Docker is not installed. Please install Docker.", sh: "command -v docker >/dev/null",}
 
   k3d-remove:
-    desc: "Remove all k3d clusters"
+    desc: Remove all k3d clusters
     silent: true
     cmds:
       - |

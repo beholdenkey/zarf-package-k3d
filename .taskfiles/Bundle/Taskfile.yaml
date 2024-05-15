@@ -20,7 +20,12 @@ tasks:
     deps: ['k3d-development']
     dir: bundle
     cmds:
-      - echo "Deploying the K3d Development Bundle..."
       - |
-        BUNDLE_VERSION=$(ls uds-bundle-k3d-development-* | sort -V | tail -n 1)
-        uds deploy $BUNDLE_VERSION --confirm --no-progress
+        echo "Deploying the K3d Development Bundle..."
+        BUNDLE_VERSION=$(ls uds-bundle-k3d-development-* 2>/dev/null | sort -V | tail -n 1)
+        if [ -z "$BUNDLE_VERSION" ]; then
+          echo "Error: No bundle version found."
+          exit 1
+        fi
+        uds deploy "$BUNDLE_VERSION" --confirm --no-progress
+        echo "Deployment of $BUNDLE_VERSION completed."
