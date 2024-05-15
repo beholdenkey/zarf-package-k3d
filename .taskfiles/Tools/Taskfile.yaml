@@ -12,21 +12,17 @@ tasks:
     cmds:
       - pbpaste | base64 | pbcopy
     preconditions:
-      - {
-          msg: "pbpaste is not installed. Please install pbpaste.",
-          sh: "command -v pbpaste >/dev/null",
-        }
-      - {
-          msg: "pbcopy is not installed. Please install pbcopy.",
-          sh: "command -v pbcopy >/dev/null",
-        }
+      - {msg: "pbpaste is not installed. Please install pbpaste.", sh: "command -v pbpaste >/dev/null"}
+      - {msg: "pbcopy is not installed. Please install pbcopy.", sh: "command -v pbcopy >/dev/null",}
 
-  docker:
+  docker.start:
     internal: true
     desc: "Start Docker on macOS or Linux if it is not already running."
     cmds:
-      - >
-        if [ "$(uname)" = "Darwin" ]; then
+      - |
+        os_type=$(uname)
+
+        if [ "$os_type" = "Darwin" ]; then
           if ! pgrep -xq -- "Docker"; then
             echo "Starting Docker on macOS..."
             open /Applications/Docker.app
@@ -38,36 +34,40 @@ tasks:
           else
             echo "Docker is already running on macOS."
           fi
-        elif [ "$(expr substr $(uname -s) 1 5)" = "Linux" ]; then
+        elif [ "$(expr substr "$os_type" 1 5)" = "Linux" ]; then
           if ! systemctl is-active --quiet docker; then
             echo "Starting Docker on Linux..."
             sudo systemctl start docker
+            while ! systemctl is-active --quiet docker; do
+              echo "Waiting for Docker to start..."
+              sleep 5
+            done
             echo "Docker is running on Linux."
           else
             echo "Docker is already running on Linux."
           fi
         else
-          echo "Unsupported operating system."
+          echo "Unsupported operating system: $os_type"
+          exit 1
         fi
     silent: true
     preconditions:
-      - {
-          msg: "Docker is not installed. Please install Docker.",
-          sh: "command -v docker >/dev/null",
-        }
-
-  port-forward:
-    desc: "Port forward Grafana to localhost"
-    summary: "Port forward Grafana to localhost"
-    silent: true
-    cmds:
-      - kubectl port-forward svc/kube-prometheus-stack-grafana 3000:80 -n monitoring
+      - {msg: "Docker is not installed. Please install Docker.", sh: "command -v docker >/dev/null",}
 
   k3d-remove:
-    desc: "Remove the k3d cluster"
+    desc: "Remove all k3d clusters"
     silent: true
     cmds:
-      - k3d cluster delete dev || true
+      - |
+        clusters=$(k3d cluster list -o json | jq -r '.[].name')
+
+        if [ -n "$clusters" ]; then
+          for cluster in $clusters; do
+            k3d cluster delete $cluster
+          done
+        else
+          echo "No k3d clusters to remove."
+        fi
 
   clean:
     summary: Cleanup Zarf Artifacts
@@ -79,13 +79,3 @@ tasks:
         find . -type d -name 'zarf-sbom' -exec rm -rf {} + 2>/dev/null
         find . -type f -name '*.tar.zst' -delete 2>/dev/null
     silent: true
-
-  format-kcl:
-    desc: Format all KCL files recursively in the project.
-    cmds:
-      - find . -type f -name '*.kcl' -exec kcl fmt {} +
-
-  generate-docs:
-    desc: Generate Markdown documentation for KCL files.
-    cmds:
-      - kcl doc generate --format md
