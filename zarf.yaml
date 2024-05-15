@@ -24,12 +24,9 @@ variables:
   - name: CLUSTER_NAME
     description: "Name of the cluster"
     default: "dev"
-  - name: DOMAIN
+  - name: CORE_DNS_OVERRIDE
     description: "The domain to use for the cluster"
     default: ".*\\.demo\\.dev"
-  - name: SUBDOMAIN
-    description: "The subdomain to use for the cluster"
-    default: "foo"
   - name: K3S_IMAGE
     description: "K3d image to use"
     default: "ghcr.io/beholdenkey/oss/forge-k3d-k3s:v1.30.0-k3s1"
@@ -77,13 +74,12 @@ components:
       onDeploy:
         before:
           - cmd: ./zarf tools kubectl get nodes -o=jsonpath='{.items[0].status.addresses[?(@.type=="InternalIP")].address}' | cut -d'.' -f1-3
-          - cmd: echo "Load network IP base for MetalLB"
             description: "Load network IP base for MetalLB"
             setVariables:
               - name: BASE_IP
         after:
           - cmd: ./zarf tools kubectl rollout restart deployment coredns -n kube-system
-          - cmd: echo "Restarting CoreDNS to apply the custom configuration to ${ZARF_VAR_CLUSTER_NAME}"
+            description: "Restart CoreDNS to pick up internal DNS override for *.demo.dev"
     charts:
       - name: metallb
         namespace: dev-stack

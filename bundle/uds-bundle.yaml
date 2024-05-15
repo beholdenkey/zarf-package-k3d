@@ -11,8 +11,7 @@ packages:
     ref: 1.0.1
     exports:
       - name: CLUSTER_NAME
-      - name: DOMAIN
-      - name: SUBDOMAIN
+      - name: CORE_DNS_OVERRIDE
       - name: K3S_IMAGE
       - name: K3D_EXTRA_ARGS
   - name: init

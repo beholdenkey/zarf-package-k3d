@@ -22,6 +22,6 @@ data:
         local
         loadbalance
         rewrite stop {
-          name regex (###ZARF_VAR_SUBDOMAIN###\.###ZARF_VAR_DOMAIN###) host.k3d.internal answer auto
+          name regex (###ZARF_VAR_CORE_DNS_OVERRIDE###) host.k3d.internal answer auto
         }
     }
