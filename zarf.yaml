@@ -6,7 +6,20 @@ metadata:
   description: "Developer K3d Cluster Setup. WARNING: This will destroy the cluster if it already exists."
   url: https://github.com/beholdenkey/forge-package-k3d
   yolo: true
-  version: "1.0.1"
+  version: "###ZARF_PKG_TMPL_PACKAGE_VERSION###"
+constants:
+  - name: METALLB_CHART_REPO
+    description: "The MetalLB chart repository"
+    value: "###ZARF_PKG_TMPL_METALLB_CHART_REPO###"
+  - name: METALLB_CHART_VERSION
+    description: "The MetalLB chart version"
+    value: "###ZARF_PKG_TMPL_METALLB_CHART_VERSION###"
+  - name: MINIO_CHART_REPO
+    description: "The MinIO chart repository"
+    value: "###ZARF_PKG_TMPL_MINIO_CHART_REPO###"
+  - name: MINIO_CHART_VERSION
+    description: "The MinIO chart version"
+    value: "###ZARF_PKG_TMPL_MINIO_CHART_VERSION###"
 variables:
   - name: CLUSTER_NAME
     description: "Name of the cluster"
@@ -71,16 +84,16 @@ components:
     charts:
       - name: metallb
         namespace: dev-stack
-        url: https://metallb.github.io/metallb
-        version: 0.14.5
+        url: "###ZARF_PKG_TMPL_METALLB_CHART_REPO###"
+        version: "###ZARF_PKG_TMPL_METALLB_CHART_VERSION###"
       - name: dev-stack
         namespace: dev-stack
         localPath: chart
         version: 0.0.2
       - name: minio
         namespace: dev-stack
-        version: 5.2.0
-        url: https://charts.min.io/
+        url: "###ZARF_PKG_TMPL_MINIO_CHART_REPO###"
+        version: "###ZARF_PKG_TMPL_MINIO_CHART_VERSION###"
         valuesFiles:
           - "values/minio-values.yaml"
   - name: validate
