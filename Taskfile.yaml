@@ -13,7 +13,10 @@ tasks:
     desc: Show help
     cmds:
       - task --list
-
+  create:
+    desc: Create local Zarf Package for Testing
+    cmds:
+      - zarf package create . --confirm --no-progress
   setup:
     summary: Setup Developer Environment
     desc: Setup Development Environment
