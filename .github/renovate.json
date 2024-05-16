@@ -1,0 +1,59 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    ":dependencyDashboard",
+    ":semanticPrefixFixDepsChoreOthers",
+    "group:all",
+    "replacements:all",
+    "workarounds:all",
+    "replacements:containerbase",
+    "replacements:read-pkg-up-rename",
+    "replacements:k8s-registry-move",
+    "config:best-practices",
+    "docker:pinDigests",
+    "helpers:pinGitHubActionDigests",
+    "replacements:semantic-release-replace-plugin-to-unscoped",
+    "replacements:standard-version-to-commit-and-tag",
+    ":pinDevDependencies"
+  ],
+  "rebaseWhen": "conflicted",
+  "labels": ["renovate"],
+  "prHourlyLimit": 0,
+  "prConcurrentLimit": 0,
+  "pre-commit": {
+    "enabled": true
+  },
+  "regexManagers": [
+    {
+      "fileMatch": ["^.env"],
+      "matchStrings": [
+        "datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s.*?_VERSION=(?<currentValue>.*)\\s"
+      ],
+      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver-coerced{{/if}}",
+      "extractVersionTemplate": "^v?(?<version>.*)$"
+    },
+    {
+      "fileMatch": ["^zarf-config.yaml"],
+      "matchStrings": [
+        "datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s.*?_VERSION:\\s(?<currentValue>.*)\\s"
+      ],
+      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver-coerced{{/if}}",
+      "extractVersionTemplate": "^v?(?<version>.*)$"
+    }
+  ],
+  "packageRules": [
+    {
+      "extends": ["helpers:pinGitHubActionDigests"]
+    },
+    {
+      "matchPackageNames": ["k8s.io/client-go"],
+      "allowedVersions": "<1.0.0"
+    },
+    {
+      "matchManagers": ["terraform"],
+      "matchDepTypes": ["module"],
+      "matchDatasources": ["helm", "docker", "github-tags", "git-tags"],
+      "versioning": "loose"
+    }
+  ]
+}
