@@ -21,6 +21,7 @@ words:
   - CODEOWNERS
   - codeql
   - commitlint
+  - containerbase
   - conventionalcommits
   - coredns
   - Crossplane
