@@ -35,7 +35,7 @@
     {
       "fileMatch": ["^zarf-config.yaml"],
       "matchStrings": [
-        "datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s.*?_VERSION:\\s(?<currentValue>.*)\\s"
+        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s.*?_VERSION:\\s(?<currentValue>.*)"
       ],
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver-coerced{{/if}}",
       "extractVersionTemplate": "^v?(?<version>.*)$"
@@ -48,12 +48,6 @@
     {
       "matchPackageNames": ["k8s.io/client-go"],
       "allowedVersions": "<1.0.0"
-    },
-    {
-      "matchManagers": ["terraform"],
-      "matchDepTypes": ["module"],
-      "matchDatasources": ["helm", "docker", "github-tags", "git-tags"],
-      "versioning": "loose"
     }
   ]
 }
