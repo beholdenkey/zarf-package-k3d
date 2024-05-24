@@ -8,7 +8,7 @@ metadata:
 packages:
   - name: k3d
     path: ../
-    ref: 1.0.1
+    ref: 1.1.0
     exports:
       - name: CLUSTER_NAME
       - name: CORE_DNS_OVERRIDE
@@ -16,6 +16,6 @@ packages:
       - name: K3D_EXTRA_ARGS
   - name: init
     repository: ghcr.io/defenseunicorns/packages/init
-    ref: v0.33.2
+    ref: v0.33.4
     optionalComponents:
       - git-server
