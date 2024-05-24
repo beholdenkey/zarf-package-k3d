@@ -1,0 +1,13 @@
+{
+  "yaml.schemas": {
+    "https://json.schemastore.org/taskfile.json": ["Taskfile.yaml", ".taskfiles/*.yaml"],
+    "http://json.schemastore.org/github-workflow.json": [".github/workflows/*.yaml"],
+    "https://raw.githubusercontent.com/defenseunicorns/uds-cli/v0.10.4/uds.schema.json": [
+      "uds-bundle.yaml"
+    ],
+    "https://raw.githubusercontent.com/defenseunicorns/uds-cli/v0.10.4/tasks.schema.json": [
+      "tasks.yaml"
+    ],
+    "https://raw.githubusercontent.com/defenseunicorns/zarf/v0.34.0/zarf.schema.json": ["zarf.yaml"]
+  }
+}
