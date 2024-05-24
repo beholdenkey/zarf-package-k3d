@@ -42,7 +42,7 @@ repos:
         files: "zarf.yaml"
         exclude: "^\\.?taskfiles/Taskfile_zarf\\.yaml$"
         types: [yaml]
-        args: ["--schemafile", "https://raw.githubusercontent.com/defenseunicorns/zarf/main/zarf.schema.json", "--no-cache"]
+        args: ["--schemafile", "https://raw.githubusercontent.com/defenseunicorns/zarf/v0.34.0/zarf.schema.json", "--no-cache"]
       - id: check-jsonschema
         name: "Validate Taskfiles Against Schema"
         files: "^Taskfile(file\\.yaml|_.*\\.yaml)|^\\.?taskfiles/Taskfile_zarf\\.yaml$"
