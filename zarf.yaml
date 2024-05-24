@@ -27,7 +27,7 @@ variables:
   - name: CORE_DNS_OVERRIDE
     description: "The domain to use for the cluster"
     default: ".*\\.demo\\.dev"
-  - name: K3S_IMAGE
+  - name: K3D_IMAGE
     description: "K3d image to use"
     default: "ghcr.io/beholdenkey/oss/forge-k3d-k3s:v1.30.0-k3s1"
   - name: K3D_EXTRA_ARGS
@@ -50,14 +50,14 @@ components:
         before:
           - cmd: |
               k3d cluster create \
-              -p "80:20080@server:*" \
-              -p "443:20443@server:*" \
+              -p "80:80@server:*" \
+              -p "443:443@server:*" \
               --api-port 6550 \
               --k3s-arg "--disable=traefik@server:*" \
               --k3s-arg "--disable=metrics-server@server:*" \
               --k3s-arg "--disable=servicelb@server:*" \
               --k3s-arg "--disable=local-storage@server:*" \
-              --image ${ZARF_VAR_K3S_IMAGE} ${ZARF_VAR_K3D_EXTRA_ARGS} \
+              --image ${ZARF_VAR_K3D_IMAGE} ${ZARF_VAR_K3D_EXTRA_ARGS} \
               ${ZARF_VAR_CLUSTER_NAME}
             description: "Create the cluster"
         onSuccess:
