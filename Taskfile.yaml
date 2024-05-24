@@ -35,5 +35,5 @@ tasks:
   nuke:
     summary: Removed all Artifacts and Deletes the k3d Cluster
     cmds:
-      - task -p tools:k3d-remove tools:clean
+      - task -p tools:k3d-remove
       - zarf tools clear-cache

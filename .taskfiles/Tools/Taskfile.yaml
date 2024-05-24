@@ -65,14 +65,3 @@ tasks:
         else
           echo "No k3d clusters to remove."
         fi
-
-  clean:
-    summary: Cleanup Zarf Artifacts
-    desc: Remove all Zarf build artifacts and delete the development cluster
-    cmds:
-      - |
-        echo "Cleaning up Zarf artifacts..."
-        rm -rf build/*
-        find . -type d -name 'zarf-sbom' -exec rm -rf {} + 2>/dev/null
-        find . -type f -name '*.tar.zst' -delete 2>/dev/null
-    silent: true
