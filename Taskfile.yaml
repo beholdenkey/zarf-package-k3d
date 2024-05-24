@@ -2,6 +2,10 @@
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
 version: "3"
 
+vars:
+  VERSION:
+    sh: "find . -name 'zarf-package-k3d-*' | awk -F'zarf-package-k3d-' '{print $2}' | awk -F'.tar.zst' '{print $1}' | head -n 1"
+
 includes:
   tools: .taskfiles/Tools/Taskfile.yaml
   bundle: .taskfiles/Bundle/Taskfile.yaml
@@ -14,9 +18,17 @@ tasks:
     cmds:
       - task --list
   create:
-    desc: Create local Zarf Package for Testing
+    desc: "Create local Zarf Package"
     cmds:
-      - zarf package create . --confirm --no-progress
+      - zarf package create . --confirm --no-progress --skip-sbom
+    preconditions:
+      - test -f zarf-package-k3d-${VERSION}.tar.zst
+      - sh: '[ 1 = 0 ]'
+        msg: "Package created successfully"
+    requires:
+      vars:
+        - VERSION
+
   setup:
     summary: Setup Developer Environment
     desc: Setup Development Environment
