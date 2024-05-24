@@ -29,7 +29,7 @@ variables:
     default: ".*\\.demo\\.dev"
   - name: K3D_IMAGE
     description: "K3d image to use"
-    default: "ghcr.io/beholdenkey/oss/forge-k3d-k3s:v1.30.0-k3s1"
+    default: "ghcr.io/defenseunicorns/oss/uds-k3d-k3s:v1.28.9-k3s1"
   - name: K3D_EXTRA_ARGS
     description: "Optionally pass k3d arguments to the default"
     default: ""
