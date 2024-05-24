@@ -20,6 +20,9 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: ["v1.27.13-k3s1", "v1.28.9-k3s1", "v1.29.4-k3s1"]
     permissions:
       contents: write # needed to write releases
       packages: write # needed for ghcr access
@@ -56,7 +59,7 @@ jobs:
           images: |
             ghcr.io/beholdenkey/oss/forge-k3d-k3s
           tags: |
-            type=raw,value=v1.30.0-k3s1
+            type=raw,value=${{ matrix.version }}
             type=raw,value=latest
       - name: Publish multi-arch image
         uses: docker/build-push-action@v5
@@ -68,6 +71,7 @@ jobs:
           context: ./docker
           file: ./docker/Dockerfile
           build-args: |
+            K3S_TAG=${{ matrix.version }}
             REVISION=${{ steps.prep.outputs.REVISION }}
           platforms: linux/amd64,linux/arm/v7,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
