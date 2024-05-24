@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: ["v1.27.13-k3s1", "v1.28.9-k3s1", "v1.29.4-k3s1"]
+        version: ["v1.28.9-k3s1", "v1.29.5-k3s1", "v1.30.0-k3s1"]
     permissions:
       contents: write # needed to write releases
       packages: write # needed for ghcr access
