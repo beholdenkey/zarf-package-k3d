@@ -4,7 +4,11 @@ version: "3"
 
 vars:
   VERSION:
-    sh: "find . -name 'zarf-package-k3d-*' | awk -F'zarf-package-k3d-' '{print $2}' | awk -F'.tar.zst' '{print $1}' | head -n 1"
+    sh: |
+      find . -name 'zarf-package-k3d-*' | \
+      awk -F'zarf-package-k3d-' '{print $2}' | \
+      awk -F'.tar.zst' '{print $1}' | \
+      head -n 1
 
 includes:
   tools: .taskfiles/Tools/Taskfile.yaml
@@ -12,22 +16,17 @@ includes:
   pre-commit:
     aliases: ["pre"]
     taskfile: .taskfiles/PreCommit/Taskfile.yaml
+
 tasks:
   default:
     desc: Show help
     cmds:
       - task --list
+
   create:
     desc: "Create local Zarf Package"
     cmds:
       - zarf package create . --confirm --no-progress --skip-sbom
-    preconditions:
-      - test -f zarf-package-k3d-${VERSION}.tar.zst
-      - sh: '[ 1 = 0 ]'
-        msg: "Package created successfully"
-    requires:
-      vars:
-        - VERSION
 
   setup:
     summary: Setup Developer Environment
@@ -43,9 +42,13 @@ tasks:
     desc: Clean Development Environment
     cmds:
       - task tools:k3d-remove
+      - rm -f zarf-package-k3d-{{.VERSION}}.tar.zst
+    requires:
+      vars:
+        - VERSION
 
   nuke:
-    summary: Removed all Artifacts and Deletes the k3d Cluster
+    summary: Remove all Artifacts and Delete the k3d Cluster
     cmds:
       - task -p tools:k3d-remove
       - zarf tools clear-cache
