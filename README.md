@@ -1,7 +1,6 @@
-# K3d Developer Environment
+# Forge Package - K3d
 
-> [!IMPORTANT]
-> This package should only be used for development and testing purposes. It is not intended for production use and all data is overwritten when the package is re-deployed.
+The Forge Package for K3d leverages [kcl-lang](https://www.kcl-lang.io/) and [Zarf](https://docs.zarf.dev/) to deploy a local Kubernetes cluster using [K3d](https://k3d.io/). This package is designed to improve the velocity in which additional forge packages can be developed and tested.
 
 ## Pre-requisites
 
@@ -25,6 +24,9 @@ zarf package create -a amd64 . --no-progress --confirm
 ```
 
 ### Deploy Local Package
+
+> [!IMPORTANT]
+> This package should only be used for development and testing purposes. It is not intended for production use and all data is overwritten when the package is re-deployed.
 
 ```bash
 zarf package deploy zarf-package-k3d-* --no-progress --confirm
