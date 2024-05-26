@@ -17,7 +17,7 @@ jobs:
       - name: Prune GHCR Versions
         uses: vlaurin/action-ghcr-prune@v0.6.0
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_TOKEN }}
           user: beholdenkey
           container: packages/k3d
           dry-run: false
