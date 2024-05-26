@@ -6,8 +6,6 @@ on:
       - main
 
 jobs:
-  prepare:
-    runs-on: ubuntu-latest
   tag-new-version:
     permissions:
       contents: write
