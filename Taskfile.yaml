@@ -3,6 +3,9 @@
 version: "3"
 
 vars:
+  CLUSTER:
+    sh: |
+      k3d cluster list --no-headers | awk '{print $1}'
   VERSION:
     sh: |
       find . -name 'zarf-package-k3d-*' | \
@@ -11,6 +14,7 @@ vars:
       head -n 1
 
 includes:
+  kubernetes: .taskfiles/Kubernetes/Taskfile.yaml
   tools: .taskfiles/Tools/Taskfile.yaml
   bundle: .taskfiles/Bundle/Taskfile.yaml
   pre-commit:

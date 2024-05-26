@@ -1,0 +1,9 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+  health-check:
+    desc: "Check for unhealthy pods in all namespaces"
+    cmds:
+      - kubectl get pods --field-selector=status.phase!=Running --all-namespaces
