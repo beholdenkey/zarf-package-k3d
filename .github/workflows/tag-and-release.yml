@@ -46,7 +46,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.RELEASE_PLEASE_TOKEN }}
 
-      - name: Publish the capability
+      - name: Publish the Package to GHCR
         run: |
           uds zarf package create --confirm -a arm64 -o oci://ghcr.io/beholdenkey/packages
           uds zarf package create --confirm -a amd64 -o oci://ghcr.io/beholdenkey/packages
