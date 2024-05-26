@@ -8,10 +8,6 @@ on:
 jobs:
   prepare:
     runs-on: ubuntu-latest
-    steps:
-      - name: Free GH Runner Space
-        uses: beholdenkey/forge-package-k3d/.github/actions/clean-runner@main
-
   tag-new-version:
     permissions:
       contents: write
