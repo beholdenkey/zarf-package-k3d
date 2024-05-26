@@ -51,7 +51,7 @@ tasks:
     preconditions:
       - {msg: "Docker is not installed. Please install Docker.", sh: "command -v docker >/dev/null",}
 
-  k3d-remove:
+  k3d.remove:
     desc: Remove all k3d clusters
     silent: true
     cmds:
