@@ -21,6 +21,5 @@ jobs:
           user: beholdenkey
           container: packages/k3d
           dry-run: false
-          keep-younger-than: 7
           keep-last: 2
           prune-untagged: true
