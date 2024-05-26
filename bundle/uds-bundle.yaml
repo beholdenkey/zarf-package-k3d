@@ -16,6 +16,6 @@ packages:
       - name: K3D_EXTRA_ARGS
   - name: init
     repository: ghcr.io/defenseunicorns/packages/init
-    ref: v0.33.4
+    ref: v0.34.0
     optionalComponents:
       - git-server
