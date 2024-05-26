@@ -6,15 +6,23 @@ vars:
   CLUSTER:
     sh: |
       k3d cluster list --no-headers | awk '{print $1}'
-  VERSION:
+  PACKAGE_VERSION:
     sh: |
       find . -name 'zarf-package-k3d-*' | \
       awk -F'zarf-package-k3d-' '{print $2}' | \
       awk -F'.tar.zst' '{print $1}' | \
       head -n 1
+  BUNDLE_VERSION:
+    sh: |
+      find . -name 'uds-bundle-k3d-development-*' | \
+      awk -F'uds-bundle-k3d-development-' '{print $2}' | \
+      awk -F'.tar.zst' '{print $1}' | \
+      head -n 1
 
 includes:
-  kubernetes: .taskfiles/Kubernetes/Taskfile.yaml
+  kubernetes:
+    aliases: ["k8s"]
+    taskfile: .taskfiles/Kubernetes/Taskfile.yaml
   tools: .taskfiles/Tools/Taskfile.yaml
   bundle: .taskfiles/Bundle/Taskfile.yaml
   pre-commit:
@@ -39,17 +47,19 @@ tasks:
       - tools:docker.start
       - create
     cmds:
-      - task bundle:deploy-k3d-development-bundle
+      - task bundle:deploy
 
   clean:
     summary: Clean Developer Environment
     desc: Clean Development Environment
     cmds:
       - task tools:k3d-remove
-      - rm -f zarf-package-k3d-{{.VERSION}}.tar.zst
+      - rm -f zarf-package-k3d-{{.PACKAGE_VERSION}}.tar.zst
+      - rm -f bundle/uds-bundle-k3d-development-{{.BUNDLE_VERSION}}.tar.zst
     requires:
       vars:
-        - VERSION
+        - PACKAGE_VERSION
+        - BUNDLE_VERSION
 
   nuke:
     summary: Remove all Artifacts and Delete the k3d Cluster
