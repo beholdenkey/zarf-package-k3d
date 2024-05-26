@@ -3,7 +3,7 @@
 version: "3"
 
 vars:
-  CLUSTER:
+  CLUSTER_NAME:
     sh: |
       k3d cluster list --no-headers | awk '{print $1}'
   PACKAGE_VERSION:
