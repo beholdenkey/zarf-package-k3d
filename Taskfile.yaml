@@ -56,6 +56,7 @@ tasks:
       - task tools:k3d-remove
       - rm -f zarf-package-k3d-{{.PACKAGE_VERSION}}.tar.zst
       - rm -f bundle/uds-bundle-k3d-development-{{.BUNDLE_VERSION}}.tar.zst
+      - find . -name 'zarf-sbom' | awk '{print "rm -rf " $1}' | sh
     requires:
       vars:
         - PACKAGE_VERSION
