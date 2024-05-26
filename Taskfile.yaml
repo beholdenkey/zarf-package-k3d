@@ -65,5 +65,5 @@ tasks:
   nuke:
     summary: Remove all Artifacts and Delete the k3d Cluster
     cmds:
-      - task -p tools:k3d-remove
+      - task clean
       - zarf tools clear-cache
