@@ -1,5 +1,64 @@
 # Changelog
 
+## [1.1.0](https://github.com/beholdenkey/forge-package-k3d/compare/v1.0.0...v1.1.0) (2024-05-26)
+
+
+### Features
+
+* add kcl modules ([84b1c05](https://github.com/beholdenkey/forge-package-k3d/commit/84b1c054b998d63d0de9d5714f8878144e40299f))
+* add kcl templates ([2f1c1b1](https://github.com/beholdenkey/forge-package-k3d/commit/2f1c1b174820e0ff695f8daa74813475b26d7d01))
+* add kcl templates ([3ae9b60](https://github.com/beholdenkey/forge-package-k3d/commit/3ae9b608a438642fd3bab99cd9ad13aa7ea6562c))
+* **ci:** add github action ([bc53500](https://github.com/beholdenkey/forge-package-k3d/commit/bc53500bc7a3903771cf24cd7ad586730c876815))
+* **ci:** add github action ([56842d6](https://github.com/beholdenkey/forge-package-k3d/commit/56842d6b86c634ad3bca71ce50d5102bc0e286f3))
+* **ci:** add github action ([6e8cdf4](https://github.com/beholdenkey/forge-package-k3d/commit/6e8cdf4e2dd176e73bc93b1fb25cc8b3bfd43991))
+* **ci:** add github action ([fdc0f4e](https://github.com/beholdenkey/forge-package-k3d/commit/fdc0f4ec6aed14bd71e33d908b0e49c8d7833393))
+* **ci:** add pre-commit hook for rennovate validation ([e56d6cc](https://github.com/beholdenkey/forge-package-k3d/commit/e56d6cc60c428d546e3bf0ac6cb3884df5054584))
+* **ci:** add vscode settings ([a7bc673](https://github.com/beholdenkey/forge-package-k3d/commit/a7bc673885cb4398466b81e4f83334b7eaddb7a8))
+* **ci:** added prune workflow ([0cdeaae](https://github.com/beholdenkey/forge-package-k3d/commit/0cdeaaea822c4b7751dd5415e62393819fa08fd6))
+* **ci:** added prune workflow ([3a5ef13](https://github.com/beholdenkey/forge-package-k3d/commit/3a5ef13177cad75191b6acbd790c081efb764a55))
+* **ci:** improve release-please configuration ([026a7f3](https://github.com/beholdenkey/forge-package-k3d/commit/026a7f31e59cf426415cf7dfeeabd0c04dc0e88e))
+* **ci:** improve taskfile ([f8ccd04](https://github.com/beholdenkey/forge-package-k3d/commit/f8ccd04b2eb28bf606720665a409ec0bea99dad1))
+* **ci:** local create task ([6bf1fe2](https://github.com/beholdenkey/forge-package-k3d/commit/6bf1fe2aecb00b0d1244c49761cc2f6f1024f26c))
+* **ci:** update root taskfile ([61269d0](https://github.com/beholdenkey/forge-package-k3d/commit/61269d0e4467fe828fbc91203dbe90b746007e5c))
+* **ci:** update taskfiles ([9276b52](https://github.com/beholdenkey/forge-package-k3d/commit/9276b52fdf1b437d3ac933531b155fc27e587fa0))
+* **ci:** update taskfiles ([9c8a720](https://github.com/beholdenkey/forge-package-k3d/commit/9c8a720f2989ef6a7af68d4f03a96cad0ed7aab7))
+* **ci:** update taskfiles ([313216b](https://github.com/beholdenkey/forge-package-k3d/commit/313216bda546c021722ec9be7561bcafd12eec04))
+* **ci:** update taskfiles ([ee413db](https://github.com/beholdenkey/forge-package-k3d/commit/ee413db6b96e85afa702fb178fd678df1755b7ac))
+* update config ([2410b34](https://github.com/beholdenkey/forge-package-k3d/commit/2410b3450d72f283a535c4c749df463b2c142fc2))
+* update config ([2ddc768](https://github.com/beholdenkey/forge-package-k3d/commit/2ddc768dbaef09f4486c934cebf5a369756760f6))
+* update config ([9f20326](https://github.com/beholdenkey/forge-package-k3d/commit/9f2032658d337122962b32ce9de0c92923005589))
+* update config ([ec9967f](https://github.com/beholdenkey/forge-package-k3d/commit/ec9967f65b68ed4feb93499281bb88c16321c691))
+* update configuration ([715f11e](https://github.com/beholdenkey/forge-package-k3d/commit/715f11e3c1b8e8bd489b8342738cb0cc9d1b45b5))
+* update configuration ([b511d1a](https://github.com/beholdenkey/forge-package-k3d/commit/b511d1aa1880939090259e018aa97cc9a3807134))
+* update dockerfile ([15cd483](https://github.com/beholdenkey/forge-package-k3d/commit/15cd4838a629935eb7884035e5ff7881a2eea9d6))
+* update image matrix ([e4f47e7](https://github.com/beholdenkey/forge-package-k3d/commit/e4f47e717b6f4abd675e027b42bb83c8ce50a639))
+* update rennovate config ([92c757e](https://github.com/beholdenkey/forge-package-k3d/commit/92c757e4bb13909051f052911ddb2d7ec6bff537))
+* update schema.k ([c0bfe57](https://github.com/beholdenkey/forge-package-k3d/commit/c0bfe578fe302e65b6e17e6580e7ddae9f404e5d))
+* update taskfile ([7b07b85](https://github.com/beholdenkey/forge-package-k3d/commit/7b07b85665f970cebeb0c21ea349c909b103ca31))
+* update uds-bundle config ([4e79051](https://github.com/beholdenkey/forge-package-k3d/commit/4e79051cd6d5a0483f6abec902a4315bda4aa339))
+* update uds-bundle.yaml ([3475dab](https://github.com/beholdenkey/forge-package-k3d/commit/3475dab43d43933d223298d8bb3ff59263544fef))
+* update values.k ([0e3f5b4](https://github.com/beholdenkey/forge-package-k3d/commit/0e3f5b41643a1f0670aa4412cdd46c8bb5e888e1))
+* update varaible ([13bea63](https://github.com/beholdenkey/forge-package-k3d/commit/13bea637afdd67bfd5b8339e33f425420cf38674))
+* update workflow ([b10912f](https://github.com/beholdenkey/forge-package-k3d/commit/b10912ffce99599f60a41a8b98075fe332607cf9))
+* update workflow ([0bf7925](https://github.com/beholdenkey/forge-package-k3d/commit/0bf79254ead1c34bf31b415197c00f0f86f1b3ad))
+* update workflow ([574ddb1](https://github.com/beholdenkey/forge-package-k3d/commit/574ddb13751a0192e1c43bc394a5b1c6c052c795))
+* update workflow ([e354ed2](https://github.com/beholdenkey/forge-package-k3d/commit/e354ed267ff5fd88d845dc37837d1fecde95921c))
+* update workflow ([c9bca1e](https://github.com/beholdenkey/forge-package-k3d/commit/c9bca1e19e3bdd629adb9723079944f794d3e20a))
+* update zarf package config ([cd803e2](https://github.com/beholdenkey/forge-package-k3d/commit/cd803e27404f3d9a13f6a9a50684be6b0e63d2dd))
+* update zarf package configuration ([29ef37e](https://github.com/beholdenkey/forge-package-k3d/commit/29ef37ee1b9b8ee52ed6c2bd81ae5a88289e183c))
+* update zarf package configuration ([70a11d8](https://github.com/beholdenkey/forge-package-k3d/commit/70a11d8cdd891243b2d7b9c3c788220e8f14f66a))
+* updated coredns.yaml ([5b661d1](https://github.com/beholdenkey/forge-package-k3d/commit/5b661d1792460307adcba379d822ae1a0691e225))
+* updated coredns.yaml ([b4556d1](https://github.com/beholdenkey/forge-package-k3d/commit/b4556d12bc5c3c03a40535a07099dfbda3f0f90c))
+
+
+### Bug Fixes
+
+* coredns configmap ([8917870](https://github.com/beholdenkey/forge-package-k3d/commit/89178700cc2e43b206de7805c8c1f6c85e1526fc))
+* fixed errors ([44fc604](https://github.com/beholdenkey/forge-package-k3d/commit/44fc604534a6c0afbcdf78493a34899d30f29e14))
+* minio chart url ([f99b944](https://github.com/beholdenkey/forge-package-k3d/commit/f99b944313586c970167d177a187058ce98a9d4f))
+* reintroduce config ([ea29433](https://github.com/beholdenkey/forge-package-k3d/commit/ea29433839d86d933c35b041455b11398fbe4c31))
+* rennovate regex ([ac06e66](https://github.com/beholdenkey/forge-package-k3d/commit/ac06e66818689c8cb782ca03c5f8b8bb1f6fe6df))
+
 ## 1.0.0 (2024-05-14)
 
 
