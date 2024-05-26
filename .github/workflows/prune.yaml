@@ -1,5 +1,5 @@
 ---
-name: Prune GHCR Versions
+name: Prune Container Registry
 
 on:
   schedule:
