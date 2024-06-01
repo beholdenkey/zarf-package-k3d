@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.2.0](https://github.com/beholdenkey/forge-package-k3d/compare/v1.1.0...v1.2.0) (2024-06-01)
+
+
+### Features
+
+* **ci:** optimize taskfile ([7b113dc](https://github.com/beholdenkey/forge-package-k3d/commit/7b113dcfd382406cb86e67231eb027f158f03773))
+* **ci:** optimize taskfile ([cc515c8](https://github.com/beholdenkey/forge-package-k3d/commit/cc515c86b315ce23d6e8765cfede0ed64a71d105))
+* **ci:** optimize taskfile ([a5e6882](https://github.com/beholdenkey/forge-package-k3d/commit/a5e6882eb97bbb8a3d98899045a4060ab9765a1e))
+* **ci:** optimize taskfile ([23a8eaf](https://github.com/beholdenkey/forge-package-k3d/commit/23a8eaf0b23103d413b9e9557e6fc97756895b4c))
+* **ci:** optimize taskfiles ([c7d8655](https://github.com/beholdenkey/forge-package-k3d/commit/c7d8655f50db747706cc75eca610bb177abc7f3a))
+* **ci:** update dynamic var ([df10fba](https://github.com/beholdenkey/forge-package-k3d/commit/df10fba14c91211fda0f742ce665b6515e4bed63))
+* optimize taskfile ([be16e02](https://github.com/beholdenkey/forge-package-k3d/commit/be16e02e78ce3240cbd16b4d6d581a2d927021f1))
+* remove workflow and action ([8f83312](https://github.com/beholdenkey/forge-package-k3d/commit/8f83312520988a17eee681bb6c7191217b0fa629))
+* remove workflow and action ([e1b882c](https://github.com/beholdenkey/forge-package-k3d/commit/e1b882c0b803c6e083f4d2954cba0310d6df2112))
+* rename gh step ([eacb8c2](https://github.com/beholdenkey/forge-package-k3d/commit/eacb8c24ed7a7102a769b29bec386533068043d2))
+* update bundle config ([fdfb7f1](https://github.com/beholdenkey/forge-package-k3d/commit/fdfb7f115287bf2160fb5a6672ba17fd81cde7d7))
+* update rennovate config ([4e82a1e](https://github.com/beholdenkey/forge-package-k3d/commit/4e82a1ea79560a3794041cfe392dd1d81d1e1f65))
+* update rennovate config ([f02e1ae](https://github.com/beholdenkey/forge-package-k3d/commit/f02e1aeb75baa47baaa0cfe2c1b1455bb2512086))
+
 ## [1.1.0](https://github.com/beholdenkey/forge-package-k3d/compare/v1.0.0...v1.1.0) (2024-05-26)
 
 
