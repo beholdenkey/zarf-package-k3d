@@ -1,31 +1,9 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    ":dependencyDashboard",
+    "github>defenseunicorns/uds-common//config/renovate.json5",
+    ":semanticCommits",
     ":semanticPrefixFixDepsChoreOthers",
-    "group:all",
     "replacements:all",
-    "workarounds:all",
-    "replacements:containerbase",
-    "replacements:read-pkg-up-rename",
-    "replacements:k8s-registry-move",
-    "config:best-practices",
-    "docker:pinDigests",
-    "helpers:pinGitHubActionDigests",
-    "replacements:semantic-release-replace-plugin-to-unscoped",
-    "replacements:standard-version-to-commit-and-tag",
-    ":pinDevDependencies"
-  ],
-  "rebaseWhen": "conflicted",
-  "labels": ["renovate"],
-  "prHourlyLimit": 0,
-  "prConcurrentLimit": 0,
-  "pre-commit": {
-    "enabled": true
-  },
-  "packageRules": [
-    {
-      "extends": ["helpers:pinGitHubActionDigests"]
-    }
+    "workarounds:all"
   ]
 }
