@@ -1,8 +1,8 @@
 ---
 options:
   log_level: debug
+  no_log_file: false
   no_progress: false
-  oci_concurrency: 3
 variables:
   k3d:
     cluster_name: dev
