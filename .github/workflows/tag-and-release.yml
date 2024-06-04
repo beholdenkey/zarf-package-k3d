@@ -36,7 +36,7 @@ jobs:
 
       - name: Setup UDS
         if: always()
-        uses: beholdenkey/forge-package-k3d/.github/actions/setup@main
+        uses: beholdenkey/beholden-actions-workflows/.github/actions/setup@v1.0.0
 
 
       - name: Login to GHCR
