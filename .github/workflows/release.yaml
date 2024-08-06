@@ -62,7 +62,7 @@ jobs:
             type=raw,value=${{ matrix.version }}
             type=raw,value=latest
       - name: Publish multi-arch image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           sbom: true
           provenance: true
