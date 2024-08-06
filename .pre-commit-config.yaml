@@ -35,7 +35,7 @@ repos:
       - id: fix-ligatures
       - id: fix-smartquotes
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.28.4
+    rev: 0.29.1
     hooks:
       - id: check-jsonschema
         name: "Validate Zarf Package Configs Against Schema"
