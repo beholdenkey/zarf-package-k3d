@@ -64,7 +64,7 @@ repos:
           - "--allow-missing-credentials"
       - id: detect-private-key
   - repo: https://github.com/google/yamlfmt
-    rev: v0.12.1
+    rev: v0.13.0
     hooks:
       - id: yamlfmt
         language: system
